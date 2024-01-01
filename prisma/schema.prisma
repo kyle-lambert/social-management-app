@@ -8,10 +8,67 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Star {
-  id            Int      @id @default(autoincrement())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  name          String   @db.VarChar(255)
-  constellation String   @db.VarChar(255)
+model User {
+  id         String       @id @default(cuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  firstName  String
+  lastName   String
+  email      String       @unique
+  isVerified Boolean      @default(false)
+  password   Password?
+  tenants    UserTenant[]
+}
+
+model Password {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  hash      String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique
+}
+
+enum TenantRole {
+  TENANT_OWNER
+  TENANT_MEMBER
+  TENANT_VIEWER
+  TENANT_CONTRIBUTER
+}
+
+enum WorkspaceRole {
+  WORKSPACE_ADMIN
+  WORKSPACE_MEMBER
+  WORKSPACE_VIEWER
+}
+
+model UserTenant {
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@id([userId, tenantId])
+  @@unique([userId, tenantId])
+  @@index([userId])
+  @@index([tenantId])
+}
+
+model Tenant {
+  id         String       @id @default(cuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  name       String
+  users      UserTenant[]
+  workspaces Workspace[]
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
 }
