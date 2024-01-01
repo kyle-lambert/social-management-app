@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  Button as AriaButton,
-  ButtonProps as AriaButtonProps,
+  Input as AriaInput,
+  InputProps as AriaInputProps,
 } from "react-aria-components";
 import { cva, RecipeVariantProps } from "~/styled-system/css";
 
-const buttonStyles = cva({
+const inputStyles = cva({
   base: {},
   variants: {
     appearance: {
@@ -25,18 +25,18 @@ const buttonStyles = cva({
   },
 });
 
-type ButtonProps = {} & RecipeVariantProps<typeof buttonStyles> &
-  Omit<AriaButtonProps, "className">;
+type InputProps = {} & RecipeVariantProps<typeof inputStyles> &
+  Omit<AriaInputProps, "className">;
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ appearance, size, ...rest }, ref) => {
     return (
-      <AriaButton
-        className={buttonStyles({ appearance, size })}
+      <AriaInput
+        className={inputStyles({ appearance, size })}
         ref={ref}
         {...rest}
       />
     );
   },
 );
-Button.displayName = "Button";
+Input.displayName = "Input";
