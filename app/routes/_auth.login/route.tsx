@@ -34,7 +34,7 @@ export async function action({ request }: ActionFunctionArgs) {
   } catch (error) {
     if (error instanceof Response) return error;
     if (error instanceof AuthorizationError) {
-      return response.unauthorized("Authorization error");
+      throw response.unauthorized("Authorization error");
     }
 
     throw error;

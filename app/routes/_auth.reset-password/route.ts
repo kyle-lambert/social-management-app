@@ -15,7 +15,7 @@ export async function action({ request }: ActionFunctionArgs) {
     return validationError(result.error);
   }
 
-  const { id, token, password, confirmPassword } = result.data;
+  const { id, token, password } = result.data;
 
   const user = await prisma.user.findUnique({
     where: {

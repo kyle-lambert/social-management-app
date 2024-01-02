@@ -46,11 +46,14 @@ model UserTenant {
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   tenantId String
   tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  roleId   String
+  role     Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@id([userId, tenantId])
-  @@unique([userId, tenantId])
+  @@unique([userId, tenantId, roleId])
   @@index([userId])
   @@index([tenantId])
+  @@index([roleId])
 }
 
 model Tenant {
@@ -60,6 +63,7 @@ model Tenant {
   name       String
   users      UserTenant[]
   workspaces Workspace[]
+  roles      Role[]
 }
 
 model Workspace {
@@ -71,4 +75,24 @@ model Workspace {
   tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   @@index([tenantId])
+}
+
+model Role {
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+  name        String
+  tenantId    String
+  tenant      Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  userTenant  UserTenant[]
+  permissions Permission[]
+
+  @@unique([id, tenantId])
+  @@index([tenantId])
+}
+
+model Permission {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  name      String
+  roles     Role[]
 }

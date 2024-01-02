@@ -4,19 +4,16 @@ import { FormStrategy } from "remix-auth-form";
 import { prisma } from "~/lib/services/db.server";
 import { bcrypt } from "~/lib/services/packages.server";
 import { sessionStorage } from "~/lib/services/session.server";
-import { AuthenticateLoginContext } from "~/routes/_auth.login/validation";
+import { AuthenticateLoginContext } from "~/lib/services/validation.server";
 
 export type EmailTokenPayload = Pick<User, "id" | "email">;
 export type ResetTokenPayload = Pick<User, "id" | "email">;
 
 export type AuthenticatorPayload = Pick<User, "id" | "email" | "isVerified">;
 
-export const authenticator = new Authenticator<AuthenticatorPayload>(
-  sessionStorage,
-  {
-    throwOnError: true,
-  },
-);
+export const authenticator = new Authenticator<User["id"]>(sessionStorage, {
+  throwOnError: true,
+});
 
 export const STRATEGY = {
   form: "FORM_STRATEGY",
@@ -45,7 +42,7 @@ authenticator.use(
       throw new AuthorizationError();
     }
 
-    return { id: user.id, email: user.email, isVerified: user.isVerified };
+    return user.id;
   }),
   STRATEGY.form,
 );
