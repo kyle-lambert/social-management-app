@@ -6,7 +6,9 @@ import { bcrypt } from "~/lib/services/packages.server";
 import { sessionStorage } from "~/lib/services/session.server";
 import { AuthenticateLoginContext } from "~/routes/_auth.login/validation";
 
-export type TokenPayload = Pick<User, "id" | "email">;
+export type EmailTokenPayload = Pick<User, "id" | "email">;
+export type ResetTokenPayload = Pick<User, "id" | "email">;
+
 export type AuthenticatorPayload = Pick<User, "id" | "email" | "isVerified">;
 
 export const authenticator = new Authenticator<AuthenticatorPayload>(

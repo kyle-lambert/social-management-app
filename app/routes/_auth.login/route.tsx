@@ -3,11 +3,11 @@ import { AuthorizationError } from "remix-auth";
 import { validationError } from "remix-validated-form";
 import { STRATEGY, authenticator } from "~/lib/services/auth.server";
 import { commitSession, getSession } from "~/lib/services/session.server";
-import { response } from "~/lib/utils/response.server";
 import {
-  AuthenticateLoginContext,
   loginValidator,
-} from "~/routes/_auth.login/validation";
+  AuthenticateLoginContext,
+} from "~/lib/services/validation.server";
+import { response } from "~/lib/utils/response.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = Object.fromEntries(await request.clone().formData());

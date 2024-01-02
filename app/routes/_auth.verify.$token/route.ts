@@ -1,9 +1,9 @@
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { TokenPayload } from "~/lib/services/auth.server";
+import { EmailTokenPayload } from "~/lib/services/auth.server";
 import { prisma } from "~/lib/services/db.server";
 import { jwt } from "~/lib/services/packages.server";
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
+export async function loader({ params }: LoaderFunctionArgs) {
   const token = params.token as string;
 
   try {
@@ -11,13 +11,18 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   } catch (error) {
     return { message: "Token is either or invalid" };
   }
+
+  return null;
 }
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const token = params.token as string;
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET) as TokenPayload;
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_SECRET,
+    ) as EmailTokenPayload;
 
     await prisma.user.update({
       where: {

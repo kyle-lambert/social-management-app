@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { validationError } from "remix-validated-form";
 import { prisma } from "~/lib/services/db.server";
 import { bcrypt, jwt } from "~/lib/services/packages.server";
+import { registerValidator } from "~/lib/services/validation.server";
 import { response } from "~/lib/utils/response.server";
-import { registerValidator } from "~/routes/_auth.register/validation";
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = Object.fromEntries(await request.clone().formData());
