@@ -42,5 +42,5 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function () {
-  return <div>Login</div>;
+  return <div>_auth.login</div>;
 }

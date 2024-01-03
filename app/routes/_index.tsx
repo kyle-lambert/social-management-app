@@ -1,10 +1,7 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { bcrypt } from "~/lib/services/packages.server";
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const hash = await bcrypt.hash("password", 10);
-  console.log({ hash });
-  return null;
+  return redirect("/login");
 }
 
 export default function () {

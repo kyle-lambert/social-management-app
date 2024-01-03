@@ -1,22 +1,21 @@
+import { VariantProps, cva } from "class-variance-authority";
 import React from "react";
 import {
   Input as AriaInput,
   InputProps as AriaInputProps,
 } from "react-aria-components";
-import { cva, RecipeVariantProps } from "~/styled-system/css";
 
-const inputStyles = cva({
-  base: {},
+const inputStyles = cva("", {
   variants: {
     appearance: {
-      primary: {},
-      secondary: {},
-      ghost: {},
+      primary: "",
+      secondary: "",
+      ghost: "",
     },
     size: {
-      sm: {},
-      md: {},
-      lg: {},
+      sm: "",
+      md: "",
+      lg: "",
     },
   },
   defaultVariants: {
@@ -25,7 +24,7 @@ const inputStyles = cva({
   },
 });
 
-type InputProps = {} & RecipeVariantProps<typeof inputStyles> &
+type InputProps = {} & VariantProps<typeof inputStyles> &
   Omit<AriaInputProps, "className">;
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
