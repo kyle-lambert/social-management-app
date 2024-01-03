@@ -6,6 +6,7 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual",
+    "db": "pscale connect social-management-app initial-setup --port 3309",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc"
@@ -48,6 +49,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.10",
     "prisma": "^5.7.1",
     "tailwindcss": "^3.4.0",
     "tsx": "^4.7.0",
@@ -60,6 +62,12 @@
     "node": ">=18.0.0"
   },
   "prettier": {
-    "tabWidth": 2
+    "tabWidth": 2,
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ],
+    "tailwindFunctions": [
+      "cva"
+    ]
   }
 }

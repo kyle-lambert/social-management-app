@@ -4,13 +4,14 @@ import {
   Button as AriaButton,
   ButtonProps as AriaButtonProps,
 } from "react-aria-components";
+import { cn } from "~/lib/utils/cn";
 
 const buttonStyles = cva("", {
   variants: {
     appearance: {
       primary: "",
       secondary: "",
-      ghost: "",
+      ghost: "flex hover:bg-black",
     },
     size: {
       sm: "",
@@ -24,14 +25,13 @@ const buttonStyles = cva("", {
   },
 });
 
-type ButtonProps = {} & VariantProps<typeof buttonStyles> &
-  Omit<AriaButtonProps, "className">;
+type ButtonProps = {} & VariantProps<typeof buttonStyles> & AriaButtonProps;
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ appearance, size, ...rest }, ref) => {
+  ({ appearance, size, className, ...rest }, ref) => {
     return (
       <AriaButton
-        className={buttonStyles({ appearance, size })}
+        className={cn(buttonStyles({ appearance, size }), className)}
         ref={ref}
         {...rest}
       />

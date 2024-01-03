@@ -1,7 +1,6 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { useActionData, useLoaderData } from "@remix-run/react";
-import { useEffect } from "react";
+import { ActionFunctionArgs } from "@remix-run/node";
 import { validationError } from "remix-validated-form";
+import { useDataLogger } from "~/hooks";
 import { prisma } from "~/lib/services/db.server";
 import { bcrypt, jwt } from "~/lib/services/packages.server";
 import { registerValidator } from "~/lib/services/validation.server";
@@ -52,11 +51,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function () {
-  const actionData = useActionData<typeof action>();
-
-  useEffect(() => {
-    console.log({ actionData });
-  }, [actionData]);
+  useDataLogger();
 
   return <div>Register</div>;
 }

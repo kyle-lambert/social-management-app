@@ -1,6 +1,11 @@
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  redirect,
+} from "@remix-run/node";
 import { AuthorizationError } from "remix-auth";
 import { validationError } from "remix-validated-form";
+import { useDataLogger } from "~/hooks";
 import { STRATEGY, authenticator } from "~/lib/services/auth.server";
 import { commitSession, getSession } from "~/lib/services/session.server";
 import {
@@ -8,6 +13,8 @@ import {
   AuthenticateLoginContext,
 } from "~/lib/services/validation.server";
 import { response } from "~/lib/utils/response.server";
+
+export async function loader({ request }: LoaderFunctionArgs) {}
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = Object.fromEntries(await request.clone().formData());
@@ -42,5 +49,6 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function () {
+  useDataLogger();
   return <div>_auth.login</div>;
 }

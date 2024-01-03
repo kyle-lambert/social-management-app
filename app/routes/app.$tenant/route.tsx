@@ -1,6 +1,5 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import { useEffect } from "react";
+import { useDataLogger } from "~/hooks";
 import { authenticator } from "~/lib/services/auth.server";
 import { prisma } from "~/lib/services/db.server";
 import { response } from "~/lib/utils/response.server";
@@ -30,11 +29,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
       },
       tenant: true,
       role: true,
-      workspaces: {
-        include: {
-          workspace: true,
-        },
-      },
     },
   });
 
@@ -42,7 +36,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     throw response.notFound("userTenant not found");
   }
 
-  const { user, tenant, role, workspaces } = tenantMembership;
+  const { user, tenant, role } = tenantMembership;
   const { tenants } = user;
 
   return json({
@@ -50,16 +44,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     tenant,
     role,
     tenants,
-    workspaces,
   });
 }
 
 export default function () {
-  const loaderData = useLoaderData<typeof loader>();
-
-  useEffect(() => {
-    console.log({ loaderData });
-  }, [loaderData]);
-
+  useDataLogger();
   return <div>app.$tenant</div>;
 }

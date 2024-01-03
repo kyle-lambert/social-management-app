@@ -1,12 +1,11 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { bcrypt } from "~/lib/services/packages.server";
+import { useDataLogger } from "~/hooks";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const hash = await bcrypt.hash("password", 10);
-  console.log({ hash });
   return null;
 }
 
 export default function () {
+  useDataLogger();
   return <div>app._index</div>;
 }
