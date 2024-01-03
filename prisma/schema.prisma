@@ -9,15 +9,16 @@ generator client {
 }
 
 model User {
-  id         String       @id @default(cuid())
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  id         String                      @id @default(cuid())
+  createdAt  DateTime                    @default(now())
+  updatedAt  DateTime                    @updatedAt
   firstName  String
   lastName   String
-  email      String       @unique
-  isVerified Boolean      @default(false)
+  email      String                      @unique
+  isVerified Boolean                     @default(false)
   password   Password?
-  tenants    UserTenant[]
+  tenants    TenantMembership[]
+  workspaces TenantWorkspaceMembership[]
 }
 
 model Password {
@@ -28,71 +29,111 @@ model Password {
   userId    String   @unique
 }
 
-enum TenantRole {
-  TENANT_OWNER
-  TENANT_MEMBER
-  TENANT_VIEWER
-  TENANT_CONTRIBUTER
-}
+// enum TenantRole {
+//   TENANT_ADMIN
+//   TENANT_MEMBER
+//   TENANT_CONTRIBUTER
+// }
 
-enum WorkspaceRole {
-  WORKSPACE_ADMIN
-  WORKSPACE_MEMBER
-  WORKSPACE_VIEWER
-}
+// enum WorkspaceRole {
+//   WORKSPACE_ADMIN
+//   WORKSPACE_MEMBER
+//   WORKSPACE_VIEWER
+// }
 
-model UserTenant {
+model TenantMembership {
   userId   String
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenant   Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   roleId   String
-  role     Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  role     TenantRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@id([userId, tenantId])
-  @@unique([userId, tenantId, roleId])
+  @@unique([userId, tenantId])
   @@index([userId])
   @@index([tenantId])
   @@index([roleId])
 }
 
+model TenantWorkspaceMembership {
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenantId    String
+  tenant      Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  roleId      String
+  role        WorkspaceRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, tenantId, workspaceId])
+  @@unique([userId, tenantId, workspaceId])
+  @@index([userId])
+  @@index([tenantId])
+  @@index([workspaceId])
+  @@index([roleId])
+}
+
 model Tenant {
-  id         String       @id @default(cuid())
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  name       String
-  users      UserTenant[]
-  workspaces Workspace[]
-  roles      Role[]
+  id                   String                      @id @default(cuid())
+  createdAt            DateTime                    @default(now())
+  updatedAt            DateTime                    @updatedAt
+  name                 String
+  users                TenantMembership[]
+  roles                TenantRole[]
+  workspaces           Workspace[]
+  workspaceMemberships TenantWorkspaceMembership[]
 }
 
 model Workspace {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String                      @id @default(cuid())
+  createdAt DateTime                    @default(now())
+  updatedAt DateTime                    @updatedAt
   name      String
   tenantId  String
-  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenant    Tenant                      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  users     TenantWorkspaceMembership[]
+  roles     WorkspaceRole[]
 
   @@index([tenantId])
 }
 
-model Role {
-  id          String       @id @default(cuid())
-  createdAt   DateTime     @default(now())
+model TenantRole {
+  id          String             @id @default(cuid())
+  createdAt   DateTime           @default(now())
   name        String
   tenantId    String
-  tenant      Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  userTenant  UserTenant[]
-  permissions Permission[]
+  tenant      Tenant             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  users       TenantMembership[]
+  permissions TenantPermission[]
 
   @@unique([id, tenantId])
   @@index([tenantId])
 }
 
-model Permission {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
+model WorkspaceRole {
+  id          String                      @id @default(cuid())
+  createdAt   DateTime                    @default(now())
+  name        String
+  workspaceId String
+  workspace   Workspace                   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  users       TenantWorkspaceMembership[]
+  permissions WorkspacePermission[]
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId])
+}
+
+model TenantPermission {
+  id        String       @id @default(cuid())
+  createdAt DateTime     @default(now())
   name      String
-  roles     Role[]
+  roles     TenantRole[]
+}
+
+model WorkspacePermission {
+  id        String          @id @default(cuid())
+  createdAt DateTime        @default(now())
+  name      String
+  roles     WorkspaceRole[]
 }

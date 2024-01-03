@@ -1,2 +1,2 @@
-export * as bcrypt from "bcryptjs";
-export * as jwt from "jsonwebtoken";
+export { default as bcrypt } from "bcryptjs";
+export { default as jwt } from "jsonwebtoken";

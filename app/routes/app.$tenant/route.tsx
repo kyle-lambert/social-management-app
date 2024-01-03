@@ -11,7 +11,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     failureRedirect: "/login",
   });
 
-  const userTenant = await prisma.userTenant.findUnique({
+  const tenantMembership = await prisma.tenantMembership.findUnique({
     where: {
       userId_tenantId: {
         userId,
@@ -30,14 +30,19 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
       },
       tenant: true,
       role: true,
+      workspaces: {
+        include: {
+          workspace: true,
+        },
+      },
     },
   });
 
-  if (!userTenant) {
+  if (!tenantMembership) {
     throw response.notFound("userTenant not found");
   }
 
-  const { user, tenant, role } = userTenant;
+  const { user, tenant, role, workspaces } = tenantMembership;
   const { tenants } = user;
 
   return json({
@@ -45,6 +50,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     tenant,
     role,
     tenants,
+    workspaces,
   });
 }
 
