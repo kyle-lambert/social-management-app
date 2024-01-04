@@ -1,4 +1,4 @@
-import { Button } from "~/components";
+import { Button, Icon } from "~/components";
 
 export default function () {
   return (
@@ -48,10 +48,7 @@ export default function () {
         </Button>
       </div>
       <div className="flex items-end gap-8">
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
+        <Icon name="chevronDoubleBackwards" className="text-2xl" />
       </div>
     </div>
   );

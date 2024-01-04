@@ -36,4 +36,8 @@
   body {
     @apply h-dvh;
   }
+
+  body {
+    @apply text-gray-900;
+  }
 }

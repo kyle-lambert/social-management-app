@@ -9,7 +9,11 @@ const FONT_FAMILY = {
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        "spin-fast": "spin 0.8s linear infinite",
+      },
+    },
     fontFamily: {
       sans: [FONT_FAMILY.monaSans, ...defaultTheme.fontFamily.sans],
     },
