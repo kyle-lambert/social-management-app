@@ -1,10 +1,11 @@
-import { User } from "@prisma/client";
 import { Authenticator, AuthorizationError } from "remix-auth";
 import { FormStrategy } from "remix-auth-form";
 import { prisma } from "~/lib/services/db.server";
 import { bcrypt } from "~/lib/services/packages.server";
 import { sessionStorage } from "~/lib/services/session.server";
-import { AuthenticateLoginContext } from "~/lib/services/validation.server";
+
+import type { User } from "@prisma/client";
+import type { AuthenticateLoginContext } from "~/lib/services/validation.server";
 
 export type EmailTokenPayload = Pick<User, "id" | "email">;
 export type ResetTokenPayload = Pick<User, "id" | "email">;

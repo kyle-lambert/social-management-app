@@ -6,13 +6,16 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigate,
 } from "@remix-run/react";
 
 import styles from "./index.css";
+import { RouterProvider } from "react-aria-components";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export default function App() {
+  const navigate = useNavigate();
   return (
     <html lang="en">
       <head>
@@ -22,7 +25,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <RouterProvider navigate={navigate}>
+          <Outlet />
+        </RouterProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

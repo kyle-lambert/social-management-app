@@ -29,19 +29,9 @@ model Password {
   userId    String   @unique
 }
 
-// enum TenantRole {
-//   TENANT_ADMIN
-//   TENANT_MEMBER
-//   TENANT_CONTRIBUTER
-// }
-
-// enum WorkspaceRole {
-//   WORKSPACE_ADMIN
-//   WORKSPACE_MEMBER
-//   WORKSPACE_VIEWER
-// }
-
 model TenantMembership {
+  id String @id @default(cuid())
+
   userId   String
   user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   tenantId String
@@ -49,7 +39,8 @@ model TenantMembership {
   roleId   String
   role     TenantRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
-  @@id([userId, tenantId])
+  workspaces TenantWorkspaceMembership[]
+
   @@unique([userId, tenantId])
   @@index([userId])
   @@index([tenantId])
@@ -57,14 +48,16 @@ model TenantMembership {
 }
 
 model TenantWorkspaceMembership {
-  userId      String
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tenantId    String
-  tenant      Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  workspaceId String
-  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  roleId      String
-  role        WorkspaceRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  userId             String
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenantId           String
+  tenant             Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workspaceId        String
+  workspace          Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  roleId             String
+  role               WorkspaceRole    @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  tenantMembershipId String
+  tenantMembership   TenantMembership @relation(fields: [tenantMembershipId], references: [id], onDelete: Cascade)
 
   @@id([userId, tenantId, workspaceId])
   @@unique([userId, tenantId, workspaceId])
@@ -72,6 +65,7 @@ model TenantWorkspaceMembership {
   @@index([tenantId])
   @@index([workspaceId])
   @@index([roleId])
+  @@index([tenantMembershipId])
 }
 
 model Tenant {
@@ -98,6 +92,9 @@ model Workspace {
   @@index([tenantId])
 }
 
+// TENANT_ADMIN
+// TENANT_MEMBER
+// TENANT_CONTRIBUTER
 model TenantRole {
   id          String             @id @default(cuid())
   createdAt   DateTime           @default(now())
@@ -111,6 +108,9 @@ model TenantRole {
   @@index([tenantId])
 }
 
+// WORKSPACE_ADMIN
+// WORKSPACE_MEMBER
+// WORKSPACE_VIEWER
 model WorkspaceRole {
   id          String                      @id @default(cuid())
   createdAt   DateTime                    @default(now())

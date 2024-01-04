@@ -1,8 +1,8 @@
-import { VariantProps, cva } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
 import React from "react";
 import {
   Input as AriaInput,
-  InputProps as AriaInputProps,
+  type InputProps as AriaInputProps,
 } from "react-aria-components";
 
 const inputStyles = cva("", {

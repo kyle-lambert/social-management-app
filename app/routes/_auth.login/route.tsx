@@ -1,6 +1,6 @@
 import {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
   redirect,
 } from "@remix-run/node";
 import { AuthorizationError } from "remix-auth";
@@ -10,11 +10,13 @@ import { STRATEGY, authenticator } from "~/lib/services/auth.server";
 import { commitSession, getSession } from "~/lib/services/session.server";
 import {
   loginValidator,
-  AuthenticateLoginContext,
+  type AuthenticateLoginContext,
 } from "~/lib/services/validation.server";
 import { response } from "~/lib/utils/response.server";
 
-export async function loader({ request }: LoaderFunctionArgs) {}
+export async function loader({ request }: LoaderFunctionArgs) {
+  return null;
+}
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = Object.fromEntries(await request.clone().formData());

@@ -1,8 +1,8 @@
-import { VariantProps, cva } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
 import React from "react";
 import {
   Button as AriaButton,
-  ButtonProps as AriaButtonProps,
+  type ButtonProps as AriaButtonProps,
 } from "react-aria-components";
 import { cn } from "~/lib/utils/cn";
 

@@ -1,4 +1,4 @@
-import { ActionFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { validationError } from "remix-validated-form";
 import { useDataLogger } from "~/hooks";
 import { prisma } from "~/lib/services/db.server";
@@ -15,7 +15,7 @@ export async function action({ request }: ActionFunctionArgs) {
     return validationError(result.error);
   }
 
-  const { firstName, lastName, email, password, confirmPassword } = result.data;
+  const { firstName, lastName, email, password } = result.data;
 
   const userExists = await prisma.user.findUnique({
     where: {

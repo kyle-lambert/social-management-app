@@ -1,5 +1,5 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { EmailTokenPayload } from "~/lib/services/auth.server";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import type { EmailTokenPayload } from "~/lib/services/auth.server";
 import { prisma } from "~/lib/services/db.server";
 import { jwt } from "~/lib/services/packages.server";
 

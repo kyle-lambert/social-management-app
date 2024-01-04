@@ -1,10 +1,11 @@
-import { ActionFunctionArgs } from "@remix-run/node";
 import { validationError } from "remix-validated-form";
 import { useDataLogger } from "~/hooks";
 import { prisma } from "~/lib/services/db.server";
 import { jwt } from "~/lib/services/packages.server";
 import { forgotPasswordValidator } from "~/lib/services/validation.server";
 import { response } from "~/lib/utils/response.server";
+
+import type { ActionFunctionArgs } from "@remix-run/node";
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = Object.fromEntries(await request.formData());

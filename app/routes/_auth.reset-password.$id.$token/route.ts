@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { ResetTokenPayload } from "~/lib/services/auth.server";
+import { type LoaderFunctionArgs, redirect } from "@remix-run/node";
+import type { ResetTokenPayload } from "~/lib/services/auth.server";
 import { prisma } from "~/lib/services/db.server";
 import { jwt } from "~/lib/services/packages.server";
 

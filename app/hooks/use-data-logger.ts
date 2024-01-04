@@ -8,5 +8,5 @@ export const useDataLogger = () => {
 
   useEffect(() => {
     console.log(url.pathname, { loader: loaderData, action: actionData });
-  }, [loaderData, actionData]);
+  }, [loaderData, actionData, url.pathname]);
 };

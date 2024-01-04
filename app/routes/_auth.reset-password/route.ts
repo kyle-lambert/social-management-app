@@ -1,6 +1,6 @@
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
+import { type ActionFunctionArgs, redirect } from "@remix-run/node";
 import { validationError } from "remix-validated-form";
-import { ResetTokenPayload } from "~/lib/services/auth.server";
+import type { ResetTokenPayload } from "~/lib/services/auth.server";
 import { prisma } from "~/lib/services/db.server";
 import { bcrypt, jwt } from "~/lib/services/packages.server";
 import { resetPasswordValidator } from "~/lib/services/validation.server";
