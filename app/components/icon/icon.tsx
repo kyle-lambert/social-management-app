@@ -1,3 +1,4 @@
+import React from "react";
 import { Check } from "~/components/icon/check";
 import { ChevronBackwards } from "~/components/icon/chevron-backwards";
 import { ChevronDoubleBackwards } from "~/components/icon/chevron-double-backward";
@@ -16,20 +17,20 @@ import { SettingsAlt } from "~/components/icon/settings-alt";
 import { cn } from "~/lib/utils/cn";
 
 const icons = {
-  check: <Check />,
-  chevronBackwards: <ChevronBackwards />,
-  chevronForwards: <ChevronForwards />,
-  chevronUp: <ChevronUp />,
-  chevronDown: <ChevronDown />,
-  chevronDoubleBackwards: <ChevronDoubleBackwards />,
-  chevronDoubleForwards: <ChevronDoubleForwards />,
-  chevronDoubleUp: <ChevronDoubleUp />,
-  chevronDoubleDown: <ChevronDoubleDown />,
-  home: <Home />,
-  loading: <Loading />,
-  search: <Search />,
-  settings: <Settings />,
-  settingsAlt: <SettingsAlt />,
+  Check,
+  ChevronBackwards,
+  ChevronDoubleBackwards,
+  ChevronDoubleDown,
+  ChevronDoubleForwards,
+  ChevronDoubleUp,
+  ChevronDown,
+  ChevronForwards,
+  ChevronUp,
+  Home,
+  Loading,
+  Search,
+  Settings,
+  SettingsAlt,
 } as const;
 
 export type IconName = keyof typeof icons;
@@ -47,7 +48,7 @@ export const Icon = ({ name, className }: IconProps) => {
         className,
       )}
     >
-      {icons[name]}
+      {React.createElement(icons[name])}
     </div>
   ) : null;
 };

@@ -6,11 +6,12 @@ import {
   Link as AriaLink,
   type LinkProps as AriaLinkProps,
 } from "react-aria-components";
+import { useIsSubmitting } from "remix-validated-form";
 import { Icon, type IconName } from "~/components";
 import { cn } from "~/lib/utils/cn";
 
 const buttonStyles = cva(
-  "flex cursor-pointer items-center justify-center rounded-sm text-center outline-none transition-colors data-[pressed]:scale-[98%] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-90 data-[focus-visible]:outline-dashed data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2  data-[focus-visible]:outline-blue-500",
+  "flex w-full cursor-pointer items-center justify-center rounded-sm text-center outline-none transition-colors data-[pressed]:scale-[98%] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-90 data-[focus-visible]:outline-dashed data-[focus-visible]:outline-2  data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-blue-500",
   {
     variants: {
       appearance: {
@@ -25,8 +26,8 @@ const buttonStyles = cva(
       },
       size: {
         sm: "min-h-10 px-3 py-1 text-sm",
-        md: "min-h-12 px-3 py-1 ",
-        lg: "min-h-14 px-3 py-1 ",
+        md: "min-h-12 px-4 py-1 ",
+        lg: "min-h-14 px-5 py-1 ",
       },
     },
     defaultVariants: {
@@ -97,7 +98,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <ButtonBase
           ref={ref}
           isDisabled={isLoading}
-          iconEnd={<Icon name="loading" className="animate-spin" />}
+          iconEnd={<Icon name="Loading" className="animate-spin" />}
           {...rest}
         >
           Loading
@@ -116,6 +117,18 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   },
 );
 Button.displayName = "Button";
+
+type ButtonSubmitProps = {
+  formId?: string;
+} & ButtonProps;
+export const ButtonSubmit = React.forwardRef<
+  HTMLButtonElement,
+  ButtonSubmitProps
+>(({ type = "submit", formId, ...rest }, ref) => {
+  const isSubmitting = useIsSubmitting(formId);
+  return <Button ref={ref} type={type} isLoading={isSubmitting} {...rest} />;
+});
+ButtonSubmit.displayName = "ButtonSubmit";
 
 type ButtonLinkBaseProps = React.PropsWithChildren<
   {
@@ -178,7 +191,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
         <ButtonLinkBase
           ref={ref}
           isDisabled={isLoading}
-          iconEnd={<Icon name="loading" className="animate-spin" />}
+          iconEnd={<Icon name="Loading" className="animate-spin" />}
           {...rest}
         >
           Loading

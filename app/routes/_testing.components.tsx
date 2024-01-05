@@ -1,87 +1,25 @@
-import { Button, ButtonLink } from "~/components";
+import { Button } from "~/components";
 
 export default function () {
   return (
-    <div className="space-y-8 p-12">
-      <div className="flex items-end gap-8">
-        <Button iconEndName="chevronDoubleBackwards" size="sm">
+    <div className="flex flex-col items-start gap-8 p-12">
+      <div className="inline-flex items-end justify-start gap-8">
+        <Button iconEndName="Check" size="sm">
           Small
         </Button>
-        <Button iconEndName="chevronDoubleBackwards" size="md">
-          Medium
-        </Button>
-        <Button iconEndName="chevronDoubleBackwards" size="lg">
-          Large
-        </Button>
+        <Button size="md">Medium</Button>
+        <Button size="lg">Large</Button>
       </div>
-      <div className="flex items-end gap-8">
-        <ButtonLink
-          appearance="secondary"
-          iconEndName="chevronDoubleBackwards"
-          size="sm"
-        >
-          Small
-        </ButtonLink>
-        <ButtonLink
-          appearance="secondary"
-          iconEndName="chevronDoubleBackwards"
-          size="md"
-        >
-          Medium
-        </ButtonLink>
-        <ButtonLink
-          appearance="secondary"
-          iconEndName="chevronDoubleBackwards"
-          size="lg"
-        >
-          Large
-        </ButtonLink>
-      </div>
-      <div className="flex items-end gap-8">
-        <Button
-          appearance="secondary"
-          iconEndName="chevronDoubleBackwards"
-          size="sm"
-        >
+      <div className="inline-flex items-end justify-start gap-8">
+        <Button appearance="secondary" size="sm">
           Small
         </Button>
-        <Button
-          appearance="secondary"
-          iconEndName="chevronDoubleBackwards"
-          size="md"
-        >
+        <Button appearance="secondary" size="md">
           Medium
         </Button>
-        <Button
-          appearance="secondary"
-          iconEndName="chevronDoubleBackwards"
-          size="lg"
-        >
+        <Button appearance="secondary" size="lg">
           Large
         </Button>
-      </div>
-      <div className="flex items-end gap-8">
-        <ButtonLink
-          appearance="ghost"
-          iconEndName="chevronDoubleBackwards"
-          size="sm"
-        >
-          Small
-        </ButtonLink>
-        <ButtonLink
-          appearance="ghost"
-          iconEndName="chevronDoubleBackwards"
-          size="md"
-        >
-          Medium
-        </ButtonLink>
-        <ButtonLink
-          appearance="ghost"
-          iconEndName="chevronDoubleBackwards"
-          size="lg"
-        >
-          Large
-        </ButtonLink>
       </div>
     </div>
   );
