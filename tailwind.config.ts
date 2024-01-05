@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       animation: {
-        "spin-fast": "spin 0.8s linear infinite",
+        "spin-fast": "spin 0.9s linear infinite",
       },
     },
     fontFamily: {

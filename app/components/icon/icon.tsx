@@ -32,14 +32,21 @@ const icons = {
   settingsAlt: <SettingsAlt />,
 } as const;
 
+export type IconName = keyof typeof icons;
+
 type IconProps = {
-  name: keyof typeof icons;
+  name: IconName;
   className?: string;
 };
 
 export const Icon = ({ name, className }: IconProps) => {
   return icons[name] ? (
-    <div className={cn("inline-flex items-center justify-center", className)}>
+    <div
+      className={cn(
+        "inline-flex flex-shrink-0 items-center justify-center",
+        className,
+      )}
+    >
       {icons[name]}
     </div>
   ) : null;
