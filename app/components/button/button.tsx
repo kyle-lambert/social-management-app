@@ -11,18 +11,18 @@ import { Icon, type IconName } from "~/components";
 import { cn } from "~/lib/utils/cn";
 
 const buttonStyles = cva(
-  "flex w-full cursor-pointer items-center justify-center rounded-sm text-center outline-none transition-colors data-[pressed]:scale-[98%] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-90 data-[focus-visible]:outline-dashed data-[focus-visible]:outline-2  data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-blue-500",
+  "flex w-full cursor-pointer items-center justify-center rounded text-center outline-none transition-colors data-[pressed]:scale-[98%] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60 data-[focus-visible]:outline-dashed  data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2  data-[focus-visible]:outline-blue-500",
   {
     variants: {
       appearance: {
         primary:
-          "border-2 border-gray-800 bg-gray-800 text-gray-100 data-[focus-visible]:border-gray-900 data-[hovered]:border-gray-900 data-[focus-visible]:bg-gray-900 data-[hovered]:bg-gray-900 data-[focus-visible]:text-white  data-[hovered]:text-white",
+          "border border-gray-800 bg-gray-800 text-gray-100 data-[focus-visible]:border-gray-900 data-[hovered]:border-gray-900 data-[focus-visible]:bg-gray-900 data-[hovered]:bg-gray-900 data-[focus-visible]:text-white  data-[hovered]:text-white",
         secondary:
-          "border-2 border-orange-200 bg-orange-200 text-gray-800 data-[focus-visible]:border-orange-300 data-[hovered]:border-orange-300 data-[focus-visible]:bg-orange-300 data-[hovered]:bg-orange-300 data-[focus-visible]:text-gray-900 data-[hovered]:text-gray-900",
+          "border border-orange-200 bg-orange-200 text-gray-800 data-[focus-visible]:border-orange-300 data-[hovered]:border-orange-300 data-[focus-visible]:bg-orange-300 data-[hovered]:bg-orange-300 data-[focus-visible]:text-gray-900 data-[hovered]:text-gray-900",
         ghost:
-          "border-2 border-gray-100 bg-gray-100 text-gray-600 data-[focus-visible]:border-gray-200 data-[hovered]:border-gray-200 data-[focus-visible]:bg-gray-200 data-[hovered]:bg-gray-200 data-[focus-visible]:text-gray-900 data-[hovered]:text-gray-900",
+          "border border-gray-100 bg-gray-100 text-gray-600 data-[focus-visible]:border-gray-200 data-[hovered]:border-gray-200 data-[focus-visible]:bg-gray-200 data-[hovered]:bg-gray-200 data-[focus-visible]:text-gray-900 data-[hovered]:text-gray-900",
         outline:
-          "border-2 border-gray-200 bg-white text-gray-600 data-[focus-visible]:border-gray-800 data-[hovered]:border-gray-800 data-[focus-visible]:text-gray-900 data-[hovered]:text-gray-900",
+          "border border-gray-200 bg-white text-gray-600 data-[focus-visible]:border-gray-800 data-[hovered]:border-gray-800 data-[focus-visible]:text-gray-900 data-[hovered]:text-gray-900",
       },
       size: {
         sm: "min-h-10 px-3 py-1 text-sm",

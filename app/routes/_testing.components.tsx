@@ -17,7 +17,29 @@ export default function () {
         <Button appearance="secondary" size="md">
           Medium
         </Button>
-        <Button appearance="secondary" size="lg">
+        <Button isLoading appearance="secondary" size="lg">
+          Large
+        </Button>
+      </div>
+      <div className="inline-flex items-end justify-start gap-8">
+        <Button appearance="outline" size="sm">
+          Small
+        </Button>
+        <Button appearance="outline" size="md">
+          Medium
+        </Button>
+        <Button isLoading appearance="outline" size="lg">
+          Large
+        </Button>
+      </div>
+      <div className="inline-flex items-end justify-start gap-8">
+        <Button appearance="ghost" size="sm">
+          Small
+        </Button>
+        <Button appearance="ghost" size="md">
+          Medium
+        </Button>
+        <Button isDisabled appearance="ghost" size="lg">
           Large
         </Button>
       </div>
