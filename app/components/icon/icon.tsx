@@ -42,13 +42,13 @@ type IconProps = {
 
 export const Icon = ({ name, className }: IconProps) => {
   return icons[name] ? (
-    <div
+    <span
       className={cn(
         "inline-flex flex-shrink-0 items-center justify-center",
         className,
       )}
     >
       {React.createElement(icons[name])}
-    </div>
+    </span>
   ) : null;
 };

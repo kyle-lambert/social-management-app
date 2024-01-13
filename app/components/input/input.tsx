@@ -5,27 +5,28 @@ import {
   type InputProps as AriaInputProps,
 } from "react-aria-components";
 
-const inputStyles = cva("", {
-  variants: {
-    appearance: {
-      primary: "",
-      secondary: "",
-      ghost: "",
+const inputStyles = cva(
+  "w-full rounded-sm border border-gray-200 bg-white leading-5 text-gray-800 placeholder-gray-400  outline-none transition-colors  hover:border-gray-300 focus:border-gray-300 focus:ring-0 focus:ring-offset-0 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400",
+  {
+    variants: {
+      appearance: {
+        success: "border-lime-600",
+        error: "border-red-600",
+      },
+      size: {
+        sm: "h-10 px-3 py-1 text-sm",
+        md: "h-11 px-3 py-1",
+        lg: "h-12 px-3 py-1",
+      },
     },
-    size: {
-      sm: "",
-      md: "",
-      lg: "",
+    defaultVariants: {
+      size: "md",
     },
   },
-  defaultVariants: {
-    appearance: "primary",
-    size: "md",
-  },
-});
+);
 
-type InputProps = {} & VariantProps<typeof inputStyles> &
-  Omit<AriaInputProps, "className">;
+type InputProps = {} & Omit<AriaInputProps, "className" | "size"> &
+  VariantProps<typeof inputStyles>;
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ appearance, size, ...rest }, ref) => {
