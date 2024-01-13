@@ -1,4 +1,3 @@
-import { useParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import {
   MenuTrigger as AriaMenuTrigger,
@@ -10,16 +9,21 @@ import {
 } from "react-aria-components";
 import { cn } from "~/lib/utils/cn";
 
-type WorkspaceSwitcherProps = {
-  items: Record<"id" | "name", string>[];
+type WorkspaceDropdownProps<TIdentifier extends string> = {
+  items: Array<{
+    id: TIdentifier;
+    name: string;
+  }>;
+  selectedId?: TIdentifier;
 };
 
-export const WorkspaceSwitcher = ({ items }: WorkspaceSwitcherProps) => {
-  const params = useParams();
-
+export const WorkspaceDropdown = <TIdentifier extends string>({
+  items,
+  selectedId,
+}: WorkspaceDropdownProps<TIdentifier>) => {
   const [selectedKey, setSelectedKey] = useState<AriaSelection>(() => {
-    const currentWorkspace = items.find((w) => w.id === params.tenant);
-    return new Set([currentWorkspace ? currentWorkspace.id : ""]);
+    const workspace = items.find((w) => w.id === selectedId);
+    return new Set([workspace ? workspace.id : ""]);
   });
 
   const selectedWorkspace = items.find((w) =>
@@ -27,9 +31,9 @@ export const WorkspaceSwitcher = ({ items }: WorkspaceSwitcherProps) => {
   );
 
   useEffect(() => {
-    const currentWorkspace = items.find((w) => w.id === params.tenant);
-    setSelectedKey(new Set([currentWorkspace ? currentWorkspace.id : ""]));
-  }, [params.tenant, items]);
+    const workspace = items.find((w) => w.id === selectedId);
+    setSelectedKey(new Set([workspace ? workspace.id : ""]));
+  }, [selectedId, items]);
 
   return (
     <AriaMenuTrigger>
