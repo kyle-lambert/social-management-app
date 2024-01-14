@@ -6,12 +6,12 @@ import {
 } from "react-aria-components";
 
 const inputStyles = cva(
-  "w-full rounded-sm border border-gray-200 bg-white leading-5 text-gray-800 placeholder-gray-400  outline-none transition-colors  hover:border-gray-300 focus:border-gray-300 focus:ring-0 focus:ring-offset-0 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400",
+  "w-full rounded-sm border border-gray-200 bg-white leading-5 text-gray-800 placeholder-gray-400 shadow-sm outline-none transition-colors hover:border-gray-300 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 data-[focus-visible]:border-gray-400 data-[focused]:border-gray-400",
   {
     variants: {
       appearance: {
-        success: "border-lime-600",
-        error: "border-red-600",
+        success: "border-lime-700",
+        error: "border-red-700",
       },
       size: {
         sm: "h-10 px-3 py-1 text-sm",
@@ -25,16 +25,16 @@ const inputStyles = cva(
   },
 );
 
-type InputProps = {} & Omit<AriaInputProps, "className" | "size"> &
+export type InputProps = {} & Omit<AriaInputProps, "className" | "size"> &
   VariantProps<typeof inputStyles>;
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ appearance, size, ...rest }, ref) => {
+  ({ appearance, size, ...props }, ref) => {
     return (
       <AriaInput
         className={inputStyles({ appearance, size })}
         ref={ref}
-        {...rest}
+        {...props}
       />
     );
   },

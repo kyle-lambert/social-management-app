@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import { cn } from "~/lib/utils/cn";
 
 const avatarStyles = cva(
-  "flex items-center justify-center rounded-full bg-gray-100 font-semibold uppercase text-gray-500",
+  "flex flex-shrink-0 items-center justify-center rounded-lg bg-amber-300 font-semibold uppercase text-amber-900",
   {
     variants: {
       size: {
@@ -12,6 +12,9 @@ const avatarStyles = cva(
         lg: "h-12 w-12 text-base",
       },
     },
+    defaultVariants: {
+      size: "md",
+    },
   },
 );
 
@@ -19,8 +22,8 @@ type AvatarProps = React.PropsWithChildren<{}> &
   VariantProps<typeof avatarStyles>;
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
-  ({ size, ...rest }, ref) => {
-    return <div ref={ref} className={cn(avatarStyles({ size }))} {...rest} />;
+  ({ size, ...props }, ref) => {
+    return <div ref={ref} className={cn(avatarStyles({ size }))} {...props} />;
   },
 );
 Avatar.displayName = "Avatar";

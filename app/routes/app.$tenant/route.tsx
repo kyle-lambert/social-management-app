@@ -1,6 +1,4 @@
 import { type LoaderFunctionArgs } from "@remix-run/node";
-import { WorkspaceSwitcher } from "~/components";
-import { useDataLogger } from "~/hooks";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   // const tenantId = params.tenant as string;
@@ -46,26 +44,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 //   });
 // }
 
-const workspaces = [
-  {
-    id: "aaa",
-    name: "Workspace AAA",
-  },
-  {
-    id: "bbb",
-    name: "Workspace BBB",
-  },
-  {
-    id: "ccc",
-    name: "Workspace CCC",
-  },
-];
-
 export default function () {
-  useDataLogger();
-  return (
-    <div className="p-4">
-      <WorkspaceSwitcher items={workspaces} />
-    </div>
-  );
+  return <div>app.$tenant</div>;
 }
