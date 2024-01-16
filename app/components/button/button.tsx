@@ -11,7 +11,7 @@ import { Icon, type IconName } from "~/components";
 import { cn } from "~/lib/utils/cn";
 
 const buttonStyles = cva(
-  "inline-flex cursor-pointer items-center justify-center rounded-sm border border-transparent leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:border-gray-200 data-[disabled]:bg-gray-100 data-[disabled]:text-gray-400 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-800",
+  "inline-flex cursor-pointer items-center justify-center rounded-sm border border-transparent leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-500",
   {
     variants: {
       appearance: {
@@ -20,16 +20,18 @@ const buttonStyles = cva(
         secondary:
           "bg-stone-200 text-gray-800 data-[focus-visible]:bg-stone-300 data-[hovered]:bg-stone-300",
         tertiary:
-          "border border-gray-200 text-gray-600 shadow-sm data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300",
+          "bg-gray-100 text-gray-800 data-[focus-visible]:bg-gray-200 data-[hovered]:bg-gray-200",
+        outline:
+          "border border-gray-200 text-gray-700 data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300",
         error:
-          "border border-gray-200 text-red-700 shadow-sm data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300 data-[focus-visible]:bg-gray-50 data-[hovered]:bg-gray-50",
+          "border border-gray-200 text-red-700 data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300",
         success:
-          "border border-gray-200 text-lime-700 shadow-sm data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300 data-[focus-visible]:bg-gray-50 data-[hovered]:bg-gray-50",
+          "border border-gray-200 text-lime-700 data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300",
       },
       size: {
-        sm: "min-h-10 px-3 py-1 text-sm",
-        md: "min-h-11 px-3 py-1 ",
-        lg: "min-h-12 px-3 py-1 ",
+        sm: "min-h-10 px-3 py-1",
+        md: "min-h-11 px-3 py-1",
+        lg: "min-h-12 px-3 py-1",
       },
     },
     defaultVariants: {
@@ -57,7 +59,7 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonBaseProps>(
         <AriaButton
           ref={ref}
           className={cn(
-            "flex items-center gap-1.5",
+            "flex items-center gap-2",
             buttonStyles({ appearance, size }),
             className,
           )}
@@ -74,7 +76,7 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonBaseProps>(
       <AriaButton
         ref={ref}
         className={cn(
-          "flex items-center gap-1.5",
+          "flex items-center gap-2",
           buttonStyles({ appearance, size }),
           className,
         )}

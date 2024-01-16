@@ -6,7 +6,7 @@ import {
 } from "react-aria-components";
 
 const inputStyles = cva(
-  "w-full rounded-sm border border-gray-200 bg-white leading-5 text-gray-800 placeholder-gray-400 shadow-sm outline-none transition-colors hover:border-gray-300 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 data-[focus-visible]:border-gray-400 data-[focused]:border-gray-400",
+  "w-full rounded-sm border border-gray-200 bg-white leading-5 text-gray-800 placeholder-gray-400 outline-none transition-colors hover:border-gray-300 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 data-[focus-visible]:border-gray-400 data-[focused]:border-gray-400",
   {
     variants: {
       appearance: {

@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import { cn } from "~/lib/utils/cn";
 
 const avatarStyles = cva(
-  "flex flex-shrink-0 items-center justify-center rounded-lg bg-amber-300 font-semibold uppercase text-amber-900",
+  "flex flex-shrink-0 items-center justify-center rounded-full bg-purple-200 font-semibold uppercase text-purple-900",
   {
     variants: {
       size: {

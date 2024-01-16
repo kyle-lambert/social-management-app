@@ -40,7 +40,7 @@ export default function () {
           Button secondary
         </Button>
         <Button
-          iconStartName="ChevronDoubleBackwards"
+          iconEndName="ChevronDoubleDown"
           size="lg"
           appearance="secondary"
         >
@@ -51,17 +51,31 @@ export default function () {
         </Button>
       </div>
       <div className="flex items-start gap-8">
-        <Button size="sm" appearance="tertiary">
+        <Button size="sm" iconStartName="SettingsAlt" appearance="tertiary">
           Button tertiary
         </Button>
         <Button isLoading size="md" appearance="tertiary">
           Button tertiary
         </Button>
-        <Button size="lg" appearance="tertiary">
+        <Button size="lg" appearance="tertiary" iconStartName="SettingsAlt">
           Button tertiary
         </Button>
         <Button size="lg" appearance="tertiary" isDisabled>
           Button tertiary
+        </Button>
+      </div>
+      <div className="flex items-start gap-8">
+        <Button size="sm" iconStartName="SettingsAlt" appearance="outline">
+          Button outline
+        </Button>
+        <Button isLoading size="md" appearance="outline">
+          Button outline
+        </Button>
+        <Button size="lg" appearance="outline" iconStartName="SettingsAlt">
+          Button outline
+        </Button>
+        <Button size="lg" appearance="outline" isDisabled>
+          Button outline
         </Button>
       </div>
       <div className="flex items-start gap-8">
