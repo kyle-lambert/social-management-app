@@ -13,6 +13,7 @@ import { Loading } from "~/components/icon/loading";
 import { Search } from "~/components/icon/search";
 import { Settings } from "~/components/icon/settings";
 import { SettingsAlt } from "~/components/icon/settings-alt";
+import { Spinner } from "~/components/icon/spinner";
 
 import { cn } from "~/lib/utils/cn";
 
@@ -31,6 +32,7 @@ const icons = {
   Search,
   Settings,
   SettingsAlt,
+  Spinner,
 } as const;
 
 export type IconName = keyof typeof icons;

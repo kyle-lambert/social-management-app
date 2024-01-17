@@ -13,7 +13,7 @@ export default {
         xs: "480px",
       },
       animation: {
-        "spin-fast": "spin 0.9s linear infinite",
+        "spin-fast": "spin 0.7s linear infinite",
       },
     },
   },

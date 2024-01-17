@@ -5,6 +5,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   // const userId = await authenticator.isAuthenticated(request, {
   //   failureRedirect: "/login",
   // });
+
   return null;
 }
 //   const tenantMembership = await prisma.tenantMembership.findUnique({

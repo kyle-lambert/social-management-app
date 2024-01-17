@@ -11,7 +11,7 @@ import { Icon, type IconName } from "~/components";
 import { cn } from "~/lib/utils/cn";
 
 const buttonStyles = cva(
-  "inline-flex cursor-pointer items-center justify-center rounded-sm border border-transparent leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-500",
+  "inline-flex cursor-pointer items-center justify-center overflow-hidden text-ellipsis text-nowrap rounded-sm border border-transparent leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-500",
   {
     variants: {
       appearance: {
@@ -29,9 +29,9 @@ const buttonStyles = cva(
           "border border-gray-200 text-lime-700 data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300",
       },
       size: {
-        sm: "min-h-10 px-3 py-1",
-        md: "min-h-11 px-3 py-1",
-        lg: "min-h-12 px-3 py-1",
+        sm: "min-h-11 px-3 py-1",
+        md: "min-h-12 px-3 py-1",
+        lg: "min-h-14 px-3 py-1",
       },
     },
     defaultVariants: {
@@ -101,12 +101,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       return (
         <ButtonBase
           ref={ref}
-          isDisabled={isLoading}
-          iconEnd={<Icon name="Loading" className="animate-spin" />}
+          className="pointer-events-none"
+          iconEnd={<Icon name="Spinner" className="animate-spin-fast" />}
           {...props}
-        >
-          Loading...
-        </ButtonBase>
+        />
       );
     }
     return (
@@ -194,8 +192,8 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       return (
         <ButtonLinkBase
           ref={ref}
-          isDisabled={isLoading}
-          iconEnd={<Icon name="Loading" className="animate-spin" />}
+          className="pointer-events-none"
+          iconEnd={<Icon name="Loading" className="animate-spin-fast" />}
           {...props}
         >
           Loading

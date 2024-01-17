@@ -9,41 +9,43 @@ import {
 } from "react-aria-components";
 import { Avatar, Icon } from "~/components";
 import { cn } from "~/lib/utils/cn";
+import { getInitials } from "~/lib/utils/helpers";
 
 type WorkspaceDropdownProps<TIdentifier extends string> = {
-  items: Array<{
+  workspaces: Array<{
     id: TIdentifier;
     name: string;
   }>;
-  selectedId?: TIdentifier;
+  currentWorkspaceId: TIdentifier;
 };
 
 export const WorkspaceDropdown = <TIdentifier extends string>({
-  items,
-  selectedId,
+  workspaces,
+  currentWorkspaceId,
 }: WorkspaceDropdownProps<TIdentifier>) => {
-  const [selectedKey, setSelectedKey] = useState<AriaSelection>(() => {
-    const workspace = items.find((w) => w.id === selectedId);
-    return new Set([workspace ? workspace.id : ""]);
-  });
   const [open, setOpen] = useState(false);
 
-  const selectedWorkspace = items.find((w) =>
-    new Set([...selectedKey]).has(w.id),
+  const [selected, setSelected] = useState<AriaSelection>(() => {
+    const workspace = workspaces.find((w) => w.id === currentWorkspaceId);
+    return new Set([workspace ? workspace.id : ""]);
+  });
+
+  const selectedWorkspace = workspaces.find((w) =>
+    new Set([...selected]).has(w.id),
   );
 
   useEffect(() => {
-    const workspace = items.find((w) => w.id === selectedId);
-    setSelectedKey(new Set([workspace ? workspace.id : ""]));
-  }, [selectedId, items]);
+    const workspace = workspaces.find((w) => w.id === currentWorkspaceId);
+    setSelected(new Set([workspace ? workspace.id : ""]));
+  }, [workspaces, currentWorkspaceId]);
 
   return (
     <AriaMenuTrigger isOpen={open} onOpenChange={setOpen}>
-      <AriaButton className="flex min-h-16 w-full shrink-0 items-center justify-between gap-2 overflow-hidden rounded border border-gray-200 px-3 py-3 outline-none">
+      <AriaButton className="flex min-h-16 w-full items-center gap-2 overflow-hidden rounded-sm border border-gray-200 px-3 py-1 outline-none data-[hovered]:border-gray-300">
         {selectedWorkspace ? (
-          <div className="flex items-center gap-3 overflow-hidden">
-            <Avatar>MS</Avatar>
-            <div className="flex flex-col overflow-hidden">
+          <div className="flex flex-1 items-center gap-3 overflow-hidden">
+            <Avatar>{getInitials(selectedWorkspace.name)}</Avatar>
+            <div className="flex flex-1 flex-col gap-0.5 overflow-hidden">
               <div className="flex-1 truncate text-left text-sm font-medium text-gray-600">
                 {selectedWorkspace.name}
               </div>
@@ -51,46 +53,63 @@ export const WorkspaceDropdown = <TIdentifier extends string>({
                 workspace@example.com
               </div>
             </div>
+            <Icon
+              className="p-0.5 text-gray-600"
+              name={open ? "ChevronUp" : "ChevronDown"}
+            />
           </div>
         ) : (
-          <div className="flex gap-3 overflow-hidden">
-            <div className="flex-1 truncate text-sm font-medium text-gray-600">
-              Choose a workspace
+          <div className="flex flex-1 items-center gap-3 overflow-hidden">
+            <div className="flex flex-1 flex-col gap-0.5 overflow-hidden">
+              <div className="flex-1 truncate text-left text-sm font-medium text-gray-600">
+                Select a workspace
+              </div>
+              <div className="flex-1 truncate text-left text-xs text-gray-400">
+                3 workspaces available
+              </div>
             </div>
+            <Icon
+              className="p-0.5 text-gray-600"
+              name={open ? "ChevronUp" : "ChevronDown"}
+            />
           </div>
         )}
-        <Icon
-          className="text-gray-600"
-          name={open ? "ChevronUp" : "ChevronDown"}
-        />
       </AriaButton>
-      <AriaPopover className="w-[var(--trigger-width)] rounded border border-gray-200 py-1 shadow-sm outline-none">
+      <AriaPopover className="w-[var(--trigger-width)] rounded-sm border border-gray-200 bg-white py-1 outline-none">
         <AriaMenu
+          items={workspaces}
           selectionMode="single"
-          selectedKeys={selectedKey}
-          onSelectionChange={setSelectedKey}
-          items={items}
+          selectedKeys={selected}
+          disabledKeys={[...selected]}
+          onSelectionChange={setSelected}
           className="outline-none"
         >
-          {(item) => {
+          {(w) => {
             return (
               <AriaMenuItem
-                // href={`/app/${item.id}`}
                 className={cn(
-                  "flex min-h-14 w-full shrink-0 cursor-pointer items-center justify-between gap-2 overflow-hidden truncate px-3 py-3 outline-none data-[hovered]:bg-gray-50",
+                  "flex min-h-16 cursor-pointer items-center justify-between gap-2 overflow-hidden truncate px-3 py-1 outline-none data-[disabled]:pointer-events-none data-[hovered]:bg-gray-50",
                 )}
               >
-                <div className="flex items-center gap-3 overflow-hidden">
-                  <Avatar>MS</Avatar>
-                  <div className="flex flex-1 flex-col overflow-hidden">
-                    <div className="flex-1 truncate text-sm font-medium text-gray-600">
-                      {item.name}
+                {({ isSelected }) => (
+                  <div className="flex flex-1 items-center gap-3 overflow-hidden">
+                    <Avatar>{getInitials(w.name)}</Avatar>
+                    <div className="flex flex-1 flex-col gap-0.5 overflow-hidden">
+                      <div className="flex-1 truncate text-left text-sm font-medium text-gray-600">
+                        {w.name}
+                      </div>
+                      <div className="flex-1 truncate text-left text-xs text-gray-400">
+                        workspace@example.com
+                      </div>
                     </div>
-                    <div className="flex-1 truncate text-xs text-gray-400">
-                      workspace@example.com
-                    </div>
+                    {isSelected && (
+                      <Icon
+                        className="rounded-sm bg-green-100 p-0.5 text-gray-800"
+                        name={"Check"}
+                      />
+                    )}
                   </div>
-                </div>
+                )}
               </AriaMenuItem>
             );
           }}
