@@ -2,13 +2,13 @@ import { Avatar, Button, Input, WorkspaceDropdown } from "~/components";
 
 export default function () {
   return (
-    <div className="p-6">
-      {/* <div className="flex items-start  gap-8">
+    <div className="flex flex-col gap-8 p-6">
+      <div className="flex items-start gap-8">
         <Input size="sm" />
         <Input size="md" />
         <Input size="lg" placeholder="This is the placeholder" />
       </div>
-      <div className="flex items-start  gap-8">
+      <div className="flex items-start gap-8">
         <Input size="md" appearance="success" />
         <Input size="md" appearance="error" />
         <Input size="md" disabled />
@@ -19,6 +19,29 @@ export default function () {
         <Avatar size="lg">KL</Avatar>
       </div>
       <div className="flex items-start  gap-8">
+        <WorkspaceDropdown
+          workspaces={[
+            { id: "w1", name: "Workspace 1" },
+            { id: "w2", name: "Workspace 2" },
+            { id: "w3", name: "Workspace 3" },
+          ]}
+        />
+        <WorkspaceDropdown
+          workspaces={[
+            { id: "w1", name: "Workspace 1" },
+            { id: "w2", name: "Workspace 2" },
+            { id: "w3", name: "Workspace 3" },
+          ]}
+        />
+        <WorkspaceDropdown
+          workspaces={[
+            { id: "w1", name: "Workspace 1" },
+            { id: "w2", name: "Workspace 2" },
+            { id: "w3", name: "Workspace 3" },
+          ]}
+        />
+      </div>
+      <div className="flex items-start gap-8">
         <Button iconEndName="Settings" size="sm" appearance="primary">
           Button primary
         </Button>
@@ -49,34 +72,8 @@ export default function () {
         <Button size="lg" appearance="secondary" isDisabled>
           Button secondary
         </Button>
-      </div> */}
-      <div className="flex items-start gap-8">
-        <WorkspaceDropdown
-          workspaces={[
-            { id: "w1", name: "Workspace 1" },
-            { id: "w2", name: "Workspace 2" },
-            { id: "w3", name: "Workspace 3" },
-          ]}
-          currentWorkspaceId="w1"
-        />
-        <WorkspaceDropdown
-          workspaces={[
-            { id: "w1", name: "Workspace 1" },
-            { id: "w2", name: "Workspace 2" },
-            { id: "w3", name: "Workspace 3" },
-          ]}
-          currentWorkspaceId="w1"
-        />
-        <WorkspaceDropdown
-          workspaces={[
-            { id: "w1", name: "Workspace 1" },
-            { id: "w2", name: "Workspace 2" },
-            { id: "w3", name: "Workspace 3" },
-          ]}
-          currentWorkspaceId="w1"
-        />
       </div>
-      {/* <div className="flex items-start  gap-8">
+      <div className="flex items-start  gap-8">
         <Button size="sm" iconStartName="SettingsAlt" appearance="tertiary">
           Button tertiary
         </Button>
@@ -111,7 +108,7 @@ export default function () {
         <Button iconStartName="Search" size="lg" appearance="success">
           Button success
         </Button>
-      </div> */}
+      </div>
     </div>
   );
 }

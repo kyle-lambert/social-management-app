@@ -1,4 +1,5 @@
 import { type LoaderFunctionArgs } from "@remix-run/node";
+import { WorkspaceDropdown } from "~/components";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   // const tenantId = params.tenant as string;
@@ -46,5 +47,17 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 // }
 
 export default function () {
-  return <div>app.$tenant</div>;
+  return (
+    <div className="p-6">
+      <div className="flex w-1/3 gap-8">
+        <WorkspaceDropdown
+          workspaces={[
+            { id: "w1", name: "Workspace 1" },
+            { id: "w2", name: "Workspace 2" },
+            { id: "w3", name: "Workspace 3" },
+          ]}
+        />
+      </div>
+    </div>
+  );
 }

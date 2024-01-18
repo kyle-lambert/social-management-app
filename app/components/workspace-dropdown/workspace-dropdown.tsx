@@ -1,3 +1,4 @@
+import { useParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import {
   MenuTrigger as AriaMenuTrigger,
@@ -11,22 +12,19 @@ import { Avatar, Icon } from "~/components";
 import { cn } from "~/lib/utils/cn";
 import { getInitials } from "~/lib/utils/helpers";
 
-type WorkspaceDropdownProps<TIdentifier extends string> = {
+type WorkspaceDropdownProps = {
   workspaces: Array<{
-    id: TIdentifier;
+    id: string;
     name: string;
   }>;
-  currentWorkspaceId: TIdentifier;
 };
 
-export const WorkspaceDropdown = <TIdentifier extends string>({
-  workspaces,
-  currentWorkspaceId,
-}: WorkspaceDropdownProps<TIdentifier>) => {
+export const WorkspaceDropdown = ({ workspaces }: WorkspaceDropdownProps) => {
+  const { tenant } = useParams();
   const [open, setOpen] = useState(false);
 
   const [selected, setSelected] = useState<AriaSelection>(() => {
-    const workspace = workspaces.find((w) => w.id === currentWorkspaceId);
+    const workspace = workspaces.find((w) => w.id === tenant);
     return new Set([workspace ? workspace.id : ""]);
   });
 
@@ -35,13 +33,13 @@ export const WorkspaceDropdown = <TIdentifier extends string>({
   );
 
   useEffect(() => {
-    const workspace = workspaces.find((w) => w.id === currentWorkspaceId);
+    const workspace = workspaces.find((w) => w.id === tenant);
     setSelected(new Set([workspace ? workspace.id : ""]));
-  }, [workspaces, currentWorkspaceId]);
+  }, [workspaces, tenant]);
 
   return (
     <AriaMenuTrigger isOpen={open} onOpenChange={setOpen}>
-      <AriaButton className="flex min-h-16 w-full items-center gap-2 overflow-hidden rounded-sm border border-gray-200 px-3 py-1 outline-none data-[hovered]:border-gray-300">
+      <AriaButton className="flex min-h-16 w-full items-center gap-2 overflow-hidden rounded-sm border border-gray-200 px-3 py-1 outline-none data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300">
         {selectedWorkspace ? (
           <div className="flex flex-1 items-center gap-3 overflow-hidden">
             <Avatar>{getInitials(selectedWorkspace.name)}</Avatar>
@@ -87,6 +85,7 @@ export const WorkspaceDropdown = <TIdentifier extends string>({
           {(w) => {
             return (
               <AriaMenuItem
+                href={`/app/${w.id}`}
                 className={cn(
                   "flex min-h-16 cursor-pointer items-center justify-between gap-2 overflow-hidden truncate px-3 py-1 outline-none data-[disabled]:pointer-events-none data-[hovered]:bg-gray-50",
                 )}
