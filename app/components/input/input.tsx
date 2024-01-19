@@ -1,17 +1,14 @@
 import { type VariantProps, cva } from "class-variance-authority";
 import React from "react";
-import {
-  Input as AriaInput,
-  type InputProps as AriaInputProps,
-} from "react-aria-components";
+import { cn } from "~/lib/utils/cn";
 
 const inputStyles = cva(
-  "placeholder:gray-400 w-full rounded-sm border border-gray-200 bg-white leading-5 text-gray-800 outline-none transition-colors hover:border-gray-300 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 data-[focus-visible]:border-gray-300 data-[focused]:border-gray-300",
+  "placeholder:gray-400 w-full rounded-sm border border-gray-200 bg-white leading-5 text-gray-800 outline-none transition-colors hover:border-gray-300 focus:border-gray-300 focus-visible:border-gray-300 disabled:pointer-events-none disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400",
   {
     variants: {
       appearance: {
-        success: "border-lime-700",
-        error: "border-red-700",
+        valid: "border-lime-700",
+        invalid: "border-red-700",
       },
       size: {
         sm: "h-11 px-3 py-1",
@@ -25,15 +22,18 @@ const inputStyles = cva(
   },
 );
 
-export type InputProps = {} & Omit<AriaInputProps, "className" | "size"> &
+export type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  keyof VariantProps<typeof inputStyles>
+> &
   VariantProps<typeof inputStyles>;
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ appearance, size, ...props }, ref) => {
+  ({ className, appearance, size, ...props }, ref) => {
     return (
-      <AriaInput
-        className={inputStyles({ appearance, size })}
+      <input
         ref={ref}
+        className={cn(inputStyles({ appearance, size }), className)}
         {...props}
       />
     );

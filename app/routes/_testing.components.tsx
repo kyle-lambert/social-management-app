@@ -1,4 +1,10 @@
-import { Avatar, Button, Input, WorkspaceDropdown } from "~/components";
+import {
+  Avatar,
+  Button,
+  Input,
+  WorkspaceDropdown,
+  TextField,
+} from "~/components";
 
 export default function () {
   return (
@@ -6,17 +12,28 @@ export default function () {
       <div className="flex items-start gap-8">
         <Input size="sm" />
         <Input size="md" />
-        <Input size="lg" placeholder="This is the placeholder" />
+        <Input size="lg" placeholder="This is a placeholder..." />
       </div>
       <div className="flex items-start gap-8">
-        <Input size="md" appearance="success" />
-        <Input size="md" appearance="error" />
-        <Input size="md" disabled />
+        <Input size="md" />
+        <Input size="md" />
+        <Input size="md" />
+      </div>
+      <div className="flex items-start gap-8">
+        <Input size="md" appearance="invalid" />
+        <Input size="md" appearance="valid" />
       </div>
       <div className="flex items-start  gap-8">
         <Avatar size="sm">KL</Avatar>
         <Avatar size="md">KL</Avatar>
         <Avatar size="lg">KL</Avatar>
+      </div>
+      <div className="grid grid-cols-3">
+        <TextField>
+          <TextField.Label>This is the label</TextField.Label>
+          <TextField.Input />
+          <TextField.Error>This is the error message</TextField.Error>
+        </TextField>
       </div>
       <div className="flex items-start  gap-8">
         <WorkspaceDropdown
@@ -51,7 +68,7 @@ export default function () {
         <Button size="lg" appearance="primary">
           Button primary
         </Button>
-        <Button size="lg" appearance="primary" isDisabled>
+        <Button size="lg" appearance="primary">
           Button primary
         </Button>
       </div>
@@ -69,7 +86,7 @@ export default function () {
         >
           Button secondary
         </Button>
-        <Button size="lg" appearance="secondary" isDisabled>
+        <Button size="lg" appearance="secondary">
           Button secondary
         </Button>
       </div>
@@ -83,7 +100,7 @@ export default function () {
         <Button size="lg" appearance="tertiary" iconStartName="SettingsAlt">
           Button tertiary
         </Button>
-        <Button size="lg" appearance="tertiary" isDisabled>
+        <Button size="lg" appearance="tertiary">
           Button tertiary
         </Button>
       </div>
@@ -97,7 +114,7 @@ export default function () {
         <Button size="lg" appearance="outline" iconStartName="SettingsAlt">
           Button outline
         </Button>
-        <Button size="lg" appearance="outline" isDisabled>
+        <Button size="lg" appearance="outline">
           Button outline
         </Button>
       </div>

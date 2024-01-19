@@ -5,55 +5,56 @@ import {
   FieldError as AriaFieldError,
   type FieldErrorProps as AriaFieldErrorProps,
   type LabelProps as AriaLabelProps,
-  type TextFieldProps as AriaTextFieldProp,
+  type TextFieldProps as AriaTextFieldProps,
 } from "react-aria-components";
+import { Input } from "~/components";
 
 import { cn } from "~/lib/utils/cn";
 
-import { Input, type InputProps } from "~/components";
-
-type FieldProps = {} & Omit<AriaTextFieldProp, "className">;
-export const Field = ({ ...props }: FieldProps) => {
-  return <AriaTextField className={cn("space-y-1")} {...props} />;
+type TextFieldProps = {} & AriaTextFieldProps;
+export const TextField = ({
+  className,
+  validationBehavior = "aria",
+  ...props
+}: TextFieldProps) => {
+  return (
+    <AriaTextField
+      className={cn("flex flex-col gap-1.5", className)}
+      validationBehavior={validationBehavior}
+      {...props}
+    />
+  );
 };
-Field.displayName = "Field";
+TextField.displayName = "TextField";
 
-type FieldLabelProps = {} & AriaLabelProps;
-const FieldLabel = forwardRef<HTMLLabelElement, FieldLabelProps>(
+type TextFieldLabelProps = {} & AriaLabelProps;
+const TextFieldLabel = forwardRef<HTMLLabelElement, TextFieldLabelProps>(
   ({ className, ...props }, ref) => {
     return (
       <AriaLabel
         ref={ref}
-        className={cn("block text-sm font-medium text-gray-600", className)}
+        className={cn("text-sm font-medium text-gray-800", className)}
         {...props}
       />
     );
   },
 );
-FieldLabel.displayName = "FieldLabel";
+TextFieldLabel.displayName = "TextFieldLabel";
 
-type FieldInputProps = InputProps;
-const FieldInput = forwardRef<HTMLInputElement, FieldInputProps>(
-  ({ ...props }, ref) => {
-    return <Input ref={ref} {...props} />;
-  },
-);
-FieldInput.displayName = "FieldInput";
-
-type FieldErrorProps = AriaFieldErrorProps;
-const FieldError = forwardRef<HTMLElement, FieldErrorProps>(
+type TextFieldErrorProps = {} & AriaFieldErrorProps;
+const TextFieldError = forwardRef<HTMLElement, TextFieldErrorProps>(
   ({ className, ...props }, ref) => {
     return (
       <AriaFieldError
         ref={ref}
-        className={cn("block text-xs text-red-600", className)}
+        className={cn("text-xs text-red-700", className)}
         {...props}
       />
     );
   },
 );
-FieldError.displayName = "FieldError";
+TextFieldError.displayName = "TextFieldError";
 
-Field.Label = FieldLabel;
-Field.Input = FieldInput;
-Field.Error = FieldError;
+TextField.Label = TextFieldLabel;
+TextField.Error = TextFieldError;
+TextField.Input = Input;

@@ -1,17 +1,12 @@
+import { Link, type LinkProps } from "@remix-run/react";
 import { type VariantProps, cva } from "class-variance-authority";
 import React from "react";
-import {
-  Button as AriaButton,
-  type ButtonProps as AriaButtonProps,
-  Link as AriaLink,
-  type LinkProps as AriaLinkProps,
-} from "react-aria-components";
-import { useIsSubmitting } from "remix-validated-form";
+
 import { Icon, type IconName } from "~/components";
 import { cn } from "~/lib/utils/cn";
 
 const buttonStyles = cva(
-  "inline-flex cursor-pointer items-center justify-center overflow-hidden text-ellipsis text-nowrap rounded-sm border border-transparent leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-500",
+  "inline-flex cursor-pointer items-center justify-center gap-2 overflow-hidden text-ellipsis text-nowrap rounded-sm border border-transparent leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-500",
   {
     variants: {
       appearance: {
@@ -45,8 +40,11 @@ type ButtonBaseProps = React.PropsWithChildren<
   {
     iconStart?: React.ReactNode;
     iconEnd?: React.ReactNode;
-  } & VariantProps<typeof buttonStyles> &
-    Omit<AriaButtonProps, "children">
+  } & Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    keyof VariantProps<typeof buttonStyles>
+  > &
+    VariantProps<typeof buttonStyles>
 >;
 
 const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonBaseProps>(
@@ -56,34 +54,25 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonBaseProps>(
   ) => {
     if (iconStart || iconEnd) {
       return (
-        <AriaButton
+        <button
           ref={ref}
-          className={cn(
-            "flex items-center gap-2",
-            buttonStyles({ appearance, size }),
-            className,
-          )}
+          className={cn(buttonStyles({ appearance, size }), className)}
           {...props}
         >
           {Boolean(iconStart) && iconStart}
           {children}
           {Boolean(iconEnd) && iconEnd}
-        </AriaButton>
+        </button>
       );
     }
 
     return (
-      <AriaButton
+      <button
         ref={ref}
-        className={cn(
-          "flex items-center gap-2",
-          buttonStyles({ appearance, size }),
-          className,
-        )}
+        className={cn(buttonStyles({ appearance, size }), className)}
+        children={children}
         {...props}
-      >
-        {children}
-      </AriaButton>
+      />
     );
   },
 );
@@ -120,24 +109,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-type ButtonSubmitProps = {
-  formId?: string;
-} & ButtonProps;
-export const ButtonSubmit = React.forwardRef<
-  HTMLButtonElement,
-  ButtonSubmitProps
->(({ type = "submit", formId, ...props }, ref) => {
-  const isSubmitting = useIsSubmitting(formId);
-  return <Button ref={ref} type={type} isLoading={isSubmitting} {...props} />;
-});
-ButtonSubmit.displayName = "ButtonSubmit";
-
 type ButtonLinkBaseProps = React.PropsWithChildren<
   {
     iconStart?: React.ReactNode;
     iconEnd?: React.ReactNode;
-  } & VariantProps<typeof buttonStyles> &
-    Omit<AriaLinkProps, "children">
+  } & Omit<LinkProps, keyof VariantProps<typeof buttonStyles>> &
+    VariantProps<typeof buttonStyles>
 >;
 
 const ButtonLinkBase = React.forwardRef<HTMLAnchorElement, ButtonLinkBaseProps>(
@@ -147,34 +124,25 @@ const ButtonLinkBase = React.forwardRef<HTMLAnchorElement, ButtonLinkBaseProps>(
   ) => {
     if (iconStart || iconEnd) {
       return (
-        <AriaLink
+        <Link
           ref={ref}
-          className={cn(
-            "flex items-center gap-2",
-            buttonStyles({ appearance, size }),
-            className,
-          )}
+          className={cn(buttonStyles({ appearance, size }), className)}
           {...props}
         >
           {Boolean(iconStart) && iconStart}
           {children}
           {Boolean(iconEnd) && iconEnd}
-        </AriaLink>
+        </Link>
       );
     }
 
     return (
-      <AriaLink
+      <Link
         ref={ref}
-        className={cn(
-          "flex items-center gap-2",
-          buttonStyles({ appearance, size }),
-          className,
-        )}
+        className={cn(buttonStyles({ appearance, size }), className)}
+        children={children}
         {...props}
-      >
-        {children}
-      </AriaLink>
+      />
     );
   },
 );
