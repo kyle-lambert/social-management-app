@@ -18,9 +18,9 @@ const buttonStyles = cva(
           "bg-gray-100 text-gray-800 data-[focus-visible]:bg-gray-200 data-[hovered]:bg-gray-200",
         outline:
           "border border-gray-200 text-gray-700 data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300",
-        error:
+        invalid:
           "border border-gray-200 text-red-700 data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300",
-        success:
+        valid:
           "border border-gray-200 text-lime-700 data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300",
       },
       size: {

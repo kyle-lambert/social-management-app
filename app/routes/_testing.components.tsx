@@ -1,12 +1,73 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import {
   Avatar,
   Button,
+  Form,
+  FormError,
+  FormField,
+  FormInput,
+  FormItem,
+  FormLabel,
   Input,
   WorkspaceDropdown,
-  TextField,
+  useForm,
 } from "~/components";
 
+import { Form as RemixForm } from "@remix-run/react";
+import {
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
+  json,
+} from "@remix-run/node";
+import { getValidatedFormData } from "remix-hook-form";
+
+const userSchema = z.object({
+  fullName: z.string().min(10),
+  // emailAddress: z.string().email(),
+});
+type UserSchema = z.infer<typeof userSchema>;
+
+const userSchemaResolver = zodResolver(userSchema);
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  return {};
+};
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const {
+    errors,
+    data,
+    receivedValues: defaultValues,
+  } = await getValidatedFormData<UserSchema>(request, userSchemaResolver);
+
+  console.log({ errors, data, defaultValues });
+
+  if (errors) {
+    return json({ errors });
+  }
+
+  return json(data);
+};
+
 export default function () {
+  const form = useForm<UserSchema>({
+    defaultValues: {
+      fullName: "",
+    },
+    mode: "onSubmit",
+    // submitConfig: {
+    //   method: "get",
+    // },
+    // fetcher,
+    submitHandlers: {
+      onValid: (props) => {
+        console.log("here");
+      },
+    },
+    resolver: userSchemaResolver,
+  });
+
   return (
     <div className="flex flex-col gap-8 p-6">
       <div className="flex items-start gap-8">
@@ -29,11 +90,27 @@ export default function () {
         <Avatar size="lg">KL</Avatar>
       </div>
       <div className="grid grid-cols-3">
-        <TextField>
-          <TextField.Label>This is the label</TextField.Label>
-          <TextField.Input />
-          <TextField.Error>This is the error message</TextField.Error>
-        </TextField>
+        <Form {...form}>
+          <RemixForm
+            method="post"
+            onSubmit={(e) => {
+              form.handleSubmit(e);
+            }}
+          >
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full name</FormLabel>
+                  <FormInput {...field} />
+                  <FormError />
+                </FormItem>
+              )}
+            />
+            <button type="submit">Submit</button>
+          </RemixForm>
+        </Form>
       </div>
       <div className="flex items-start  gap-8">
         <WorkspaceDropdown
@@ -119,10 +196,10 @@ export default function () {
         </Button>
       </div>
       <div className="flex items-start  gap-8">
-        <Button iconStartName="Search" size="lg" appearance="error">
+        <Button iconStartName="Search" size="lg" appearance="invalid">
           Button error
         </Button>
-        <Button iconStartName="Search" size="lg" appearance="success">
+        <Button iconStartName="Search" size="lg" appearance="valid">
           Button success
         </Button>
       </div>
