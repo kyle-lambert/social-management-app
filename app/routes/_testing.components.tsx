@@ -1,38 +1,31 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  Avatar,
-  Button,
-  Form,
-  FormError,
-  FormField,
-  FormInput,
-  FormItem,
-  FormLabel,
-  Input,
-  WorkspaceDropdown,
-  useForm,
-} from "~/components";
-
 import { Form as RemixForm } from "@remix-run/react";
-import {
-  type ActionFunctionArgs,
-  type LoaderFunctionArgs,
-  json,
-} from "@remix-run/node";
+
+import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { getValidatedFormData } from "remix-hook-form";
 
+import {
+  Form,
+  FormError,
+  FormFieldController,
+  FormInput,
+  FormLabel,
+  FormTextField,
+  useForm,
+} from "~/components/form";
+import { Input } from "~/components/input";
+import { Avatar } from "~/components/avatar";
+import { Button } from "~/components/button";
+import { WorkspaceDropdown } from "~/components/workspace-dropdown";
+
 const userSchema = z.object({
-  fullName: z.string().min(10),
-  // emailAddress: z.string().email(),
+  fullName: z.string().min(1),
+  emailAddress: z.string().email().min(1),
 });
 type UserSchema = z.infer<typeof userSchema>;
 
 const userSchemaResolver = zodResolver(userSchema);
-
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return {};
-};
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const {
@@ -55,15 +48,9 @@ export default function () {
     defaultValues: {
       fullName: "",
     },
-    mode: "onSubmit",
-    // submitConfig: {
-    //   method: "get",
-    // },
-    // fetcher,
-    submitHandlers: {
-      onValid: (props) => {
-        console.log("here");
-      },
+    mode: "all",
+    submitConfig: {
+      method: "post",
     },
     resolver: userSchemaResolver,
   });
@@ -78,7 +65,7 @@ export default function () {
       <div className="flex items-start gap-8">
         <Input size="md" />
         <Input size="md" />
-        <Input size="md" />
+        <Input size="md" disabled />
       </div>
       <div className="flex items-start gap-8">
         <Input size="md" appearance="invalid" />
@@ -91,24 +78,43 @@ export default function () {
       </div>
       <div className="grid grid-cols-3">
         <Form {...form}>
-          <RemixForm
-            method="post"
-            onSubmit={(e) => {
-              form.handleSubmit(e);
-            }}
-          >
-            <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full name</FormLabel>
-                  <FormInput {...field} />
-                  <FormError />
-                </FormItem>
-              )}
-            />
-            <button type="submit">Submit</button>
+          <RemixForm onSubmit={form.handleSubmit}>
+            <div className="space-y-4">
+              <FormFieldController
+                control={form.control}
+                name="fullName"
+                render={({ field, fieldState }) => (
+                  <FormTextField
+                    name={field.name}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    isInvalid={fieldState.invalid}
+                  >
+                    <FormLabel>Full name</FormLabel>
+                    <FormInput ref={field.ref} />
+                    <FormError />
+                  </FormTextField>
+                )}
+              />
+              <FormFieldController
+                control={form.control}
+                name="emailAddress"
+                render={({ field, fieldState }) => (
+                  <FormTextField
+                    name={field.name}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    isInvalid={fieldState.invalid}
+                  >
+                    <FormLabel>Email Address</FormLabel>
+                    <FormInput ref={field.ref} />
+                    <FormError />
+                  </FormTextField>
+                )}
+              />
+            </div>
           </RemixForm>
         </Form>
       </div>

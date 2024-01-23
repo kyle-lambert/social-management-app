@@ -8,7 +8,10 @@ import {
   MenuItem as AriaMenuItem,
   type Selection as AriaSelection,
 } from "react-aria-components";
-import { Avatar, Icon } from "~/components";
+
+import { Avatar } from "~/components/avatar";
+import { Icon } from "~/components/icon";
+
 import { cn } from "~/lib/utils/cn";
 import { getInitials } from "~/lib/utils/helpers";
 

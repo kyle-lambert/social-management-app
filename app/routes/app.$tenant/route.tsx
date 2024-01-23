@@ -1,5 +1,5 @@
 import { type LoaderFunctionArgs } from "@remix-run/node";
-import { WorkspaceDropdown } from "~/components";
+import { WorkspaceDropdown } from "~/components/workspace-dropdown";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   // const tenantId = params.tenant as string;

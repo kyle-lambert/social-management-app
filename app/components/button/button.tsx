@@ -1,9 +1,14 @@
-import { Link, type LinkProps } from "@remix-run/react";
-import { type VariantProps, cva } from "class-variance-authority";
 import React from "react";
+import { type VariantProps, cva } from "class-variance-authority";
+import {
+  Button as AriaButton,
+  Link as AriaLink,
+  type ButtonProps as AriaButtonProps,
+  type LinkProps as AriaLinkProps,
+} from "react-aria-components";
 
-import { Icon, type IconName } from "~/components";
 import { cn } from "~/lib/utils/cn";
+import { Icon, type IconName } from "~/components/icon";
 
 const buttonStyles = cva(
   "inline-flex cursor-pointer items-center justify-center gap-2 overflow-hidden text-ellipsis text-nowrap rounded-sm border border-transparent leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-500",
@@ -40,10 +45,7 @@ type ButtonBaseProps = React.PropsWithChildren<
   {
     iconStart?: React.ReactNode;
     iconEnd?: React.ReactNode;
-  } & Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    keyof VariantProps<typeof buttonStyles>
-  > &
+  } & Omit<AriaButtonProps, keyof VariantProps<typeof buttonStyles>> &
     VariantProps<typeof buttonStyles>
 >;
 
@@ -54,7 +56,7 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonBaseProps>(
   ) => {
     if (iconStart || iconEnd) {
       return (
-        <button
+        <AriaButton
           ref={ref}
           className={cn(buttonStyles({ appearance, size }), className)}
           {...props}
@@ -62,12 +64,12 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonBaseProps>(
           {Boolean(iconStart) && iconStart}
           {children}
           {Boolean(iconEnd) && iconEnd}
-        </button>
+        </AriaButton>
       );
     }
 
     return (
-      <button
+      <AriaButton
         ref={ref}
         className={cn(buttonStyles({ appearance, size }), className)}
         children={children}
@@ -78,7 +80,7 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonBaseProps>(
 );
 ButtonBase.displayName = "ButtonBase";
 
-type ButtonProps = {
+export type ButtonProps = {
   iconStartName?: IconName;
   iconEndName?: IconName;
   isLoading?: boolean;
@@ -113,7 +115,7 @@ type ButtonLinkBaseProps = React.PropsWithChildren<
   {
     iconStart?: React.ReactNode;
     iconEnd?: React.ReactNode;
-  } & Omit<LinkProps, keyof VariantProps<typeof buttonStyles>> &
+  } & Omit<AriaLinkProps, keyof VariantProps<typeof buttonStyles>> &
     VariantProps<typeof buttonStyles>
 >;
 
@@ -124,7 +126,7 @@ const ButtonLinkBase = React.forwardRef<HTMLAnchorElement, ButtonLinkBaseProps>(
   ) => {
     if (iconStart || iconEnd) {
       return (
-        <Link
+        <AriaLink
           ref={ref}
           className={cn(buttonStyles({ appearance, size }), className)}
           {...props}
@@ -132,12 +134,12 @@ const ButtonLinkBase = React.forwardRef<HTMLAnchorElement, ButtonLinkBaseProps>(
           {Boolean(iconStart) && iconStart}
           {children}
           {Boolean(iconEnd) && iconEnd}
-        </Link>
+        </AriaLink>
       );
     }
 
     return (
-      <Link
+      <AriaLink
         ref={ref}
         className={cn(buttonStyles({ appearance, size }), className)}
         children={children}
@@ -148,7 +150,7 @@ const ButtonLinkBase = React.forwardRef<HTMLAnchorElement, ButtonLinkBaseProps>(
 );
 ButtonLinkBase.displayName = "ButtonLinkBase";
 
-type ButtonLinkProps = {
+export type ButtonLinkProps = {
   iconStartName?: IconName;
   iconEndName?: IconName;
   isLoading?: boolean;
