@@ -3,13 +3,12 @@ import { forwardRef } from "react";
 import { cn } from "~/lib/utils/cn";
 
 const avatarStyles = cva(
-  "flex flex-shrink-0 items-center justify-center rounded-full bg-purple-200 font-semibold uppercase text-purple-900",
+  "flex flex-shrink-0 items-center justify-center bg-red-900 font-semibold uppercase text-white",
   {
     variants: {
       size: {
-        sm: "h-8 w-8 text-xs",
-        md: "h-10 w-10 text-sm",
-        lg: "h-12 w-12 text-base",
+        sm: "h-8 w-8 rounded-sm text-xs",
+        md: "h-10 w-10 rounded text-sm",
       },
     },
     defaultVariants: {

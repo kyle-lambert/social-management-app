@@ -23,11 +23,10 @@ type WorkspaceDropdownProps = {
 };
 
 export const WorkspaceDropdown = ({ workspaces }: WorkspaceDropdownProps) => {
-  const { tenant } = useParams();
-  const [open, setOpen] = useState(false);
+  const params = useParams();
 
   const [selected, setSelected] = useState<AriaSelection>(() => {
-    const workspace = workspaces.find((w) => w.id === tenant);
+    const workspace = workspaces.find((w) => w.id === params?.workspace);
     return new Set([workspace ? workspace.id : ""]);
   });
 
@@ -36,82 +35,77 @@ export const WorkspaceDropdown = ({ workspaces }: WorkspaceDropdownProps) => {
   );
 
   useEffect(() => {
-    const workspace = workspaces.find((w) => w.id === tenant);
+    const workspace = workspaces.find((w) => w.id === params?.workspace);
     setSelected(new Set([workspace ? workspace.id : ""]));
-  }, [workspaces, tenant]);
+  }, [workspaces, params?.workspace]);
 
   return (
-    <AriaMenuTrigger isOpen={open} onOpenChange={setOpen}>
-      <AriaButton className="flex min-h-16 w-full items-center gap-2 overflow-hidden rounded-sm border border-gray-200 px-3 py-1 outline-none data-[focus-visible]:border-gray-300 data-[hovered]:border-gray-300">
-        {selectedWorkspace ? (
-          <div className="flex flex-1 items-center gap-3 overflow-hidden">
+    <AriaMenuTrigger>
+      {selectedWorkspace ? (
+        <AriaButton className="flex min-h-16 w-full items-center gap-2 overflow-hidden rounded-lg bg-gray-50 px-3 py-1 outline-none transition-colors data-[hovered]:bg-gray-100 data-[focus-visible]:outline data-[focus-visible]:outline-offset-0 data-[focus-visible]:outline-blue-800">
+          <div className="flex flex-1 items-center gap-2.5 overflow-hidden">
             <Avatar>{getInitials(selectedWorkspace.name)}</Avatar>
-            <div className="flex flex-1 flex-col gap-0.5 overflow-hidden">
-              <div className="flex-1 truncate text-left text-sm font-medium text-gray-600">
+            <div className="flex flex-1 flex-col overflow-hidden">
+              <div className="flex-1 truncate text-left text-sm font-medium text-gray-900">
                 {selectedWorkspace.name}
               </div>
-              <div className="flex-1 truncate text-left text-xs text-gray-400">
+              <div className="flex-1 truncate text-left text-xs text-gray-800">
                 workspace@example.com
               </div>
             </div>
-            <Icon
-              className="p-0.5 text-gray-600"
-              name={open ? "ChevronUp" : "ChevronDown"}
-            />
+            <Icon className="p-0.5 text-gray-900" name="ChevronDown" />
           </div>
-        ) : (
-          <div className="flex flex-1 items-center gap-3 overflow-hidden">
-            <div className="flex flex-1 flex-col gap-0.5 overflow-hidden">
-              <div className="flex-1 truncate text-left text-sm font-medium text-gray-600">
+        </AriaButton>
+      ) : (
+        <AriaButton className="flex min-h-16 w-full items-center gap-2 overflow-hidden rounded-lg bg-gray-50 px-3 py-1 outline-none transition-colors data-[hovered]:bg-gray-100 data-[focus-visible]:outline data-[focus-visible]:outline-offset-0 data-[focus-visible]:outline-blue-800">
+          <div className="flex flex-1 items-center gap-2.5 overflow-hidden">
+            <div className="flex flex-1 flex-col overflow-hidden">
+              <div className="flex-1 truncate text-left text-sm font-medium text-gray-900">
                 Select a workspace
               </div>
-              <div className="flex-1 truncate text-left text-xs text-gray-400">
+              <div className="flex-1 truncate text-left text-xs text-gray-800">
                 3 workspaces available
               </div>
             </div>
-            <Icon
-              className="p-0.5 text-gray-600"
-              name={open ? "ChevronUp" : "ChevronDown"}
-            />
+            <Icon className="p-0.5 text-gray-900" name="ChevronDown" />
           </div>
-        )}
-      </AriaButton>
-      <AriaPopover className="w-[var(--trigger-width)] rounded-sm border border-gray-200 bg-white py-1 outline-none">
+        </AriaButton>
+      )}
+      <AriaPopover className="w-[var(--trigger-width)] rounded-lg bg-white p-2 shadow-2xl outline-none">
         <AriaMenu
           items={workspaces}
           selectionMode="single"
           selectedKeys={selected}
           disabledKeys={[...selected]}
           onSelectionChange={setSelected}
-          className="outline-none"
+          className="flex flex-col gap-y-1.5 outline-none"
         >
           {(w) => {
             return (
               <AriaMenuItem
-                href={`/app/${w.id}`}
+                // href={`/app/${params?.tenant}/${w.id}`}
                 className={cn(
-                  "flex min-h-16 cursor-pointer items-center justify-between gap-2 overflow-hidden truncate px-3 py-1 outline-none data-[disabled]:pointer-events-none data-[hovered]:bg-gray-50",
+                  "flex cursor-pointer items-center justify-between gap-2 overflow-hidden truncate rounded bg-white px-2 py-2.5 outline-none transition-colors data-[disabled]:pointer-events-none data-[hovered]:bg-gray-100 data-[selected]:bg-stone-200 data-[focus-visible]:outline data-[focus-visible]:outline-offset-0 data-[focus-visible]:outline-blue-800",
                 )}
               >
-                {({ isSelected }) => (
-                  <div className="flex flex-1 items-center gap-3 overflow-hidden">
-                    <Avatar>{getInitials(w.name)}</Avatar>
-                    <div className="flex flex-1 flex-col gap-0.5 overflow-hidden">
-                      <div className="flex-1 truncate text-left text-sm font-medium text-gray-600">
-                        {w.name}
+                {({ isSelected }) => {
+                  return (
+                    <div className="flex flex-1 items-center gap-2.5 overflow-hidden">
+                      <Avatar size="sm">{getInitials(w.name)}</Avatar>
+                      <div className="flex flex-1 flex-col overflow-hidden">
+                        <div className="flex-1 truncate text-left text-sm font-medium text-gray-900">
+                          {w.name}
+                        </div>
+                        <div className="flex-1 truncate text-left text-xs text-gray-800">
+                          workspace@example.com
+                        </div>
                       </div>
-                      <div className="flex-1 truncate text-left text-xs text-gray-400">
-                        workspace@example.com
-                      </div>
+                      {/* {isSelected && (
+                        <Icon className="text-gray-900" name="Check" />
+                      )} */}
                     </div>
-                    {isSelected && (
-                      <Icon
-                        className="rounded-sm bg-green-100 p-0.5 text-gray-800"
-                        name={"Check"}
-                      />
-                    )}
-                  </div>
-                )}
+                  );
+                }}
               </AriaMenuItem>
             );
           }}

@@ -8,7 +8,7 @@ import {
 import { cn } from "~/lib/utils/cn";
 
 const inputStyles = cva(
-  "placeholder:gray-400 w-full rounded-sm border border-gray-200 bg-white leading-5 text-gray-800 outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:border-gray-200 data-[focus-visible]:border-gray-300 data-[focused]:border-gray-300 data-[hovered]:border-gray-300 data-[invalid]:border-red-700 data-[disabled]:bg-gray-100 data-[disabled]:text-gray-400",
+  "placeholder:gray-400 w-full rounded-md border border-gray-200 bg-white leading-5 text-gray-800 outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:border-gray-200 data-[focus-visible]:border-gray-400 data-[focused]:border-gray-400 data-[hovered]:border-gray-400 data-[invalid]:border-red-700 data-[disabled]:bg-gray-100 data-[disabled]:text-gray-400",
   {
     variants: {
       appearance: {

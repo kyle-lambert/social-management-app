@@ -11,14 +11,14 @@ import { cn } from "~/lib/utils/cn";
 import { Icon, type IconName } from "~/components/icon";
 
 const buttonStyles = cva(
-  "inline-flex cursor-pointer items-center justify-center gap-2 overflow-hidden text-ellipsis text-nowrap rounded-sm border border-transparent leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-500",
+  "inline-flex cursor-pointer items-center justify-center gap-2 overflow-hidden text-ellipsis text-nowrap rounded-md border border-transparent font-medium leading-5 outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70 data-[focus-visible]:outline-2 data-[focus-visible]:outline-blue-500",
   {
     variants: {
       appearance: {
         primary:
-          "bg-gray-800 text-white data-[focus-visible]:bg-gray-900 data-[hovered]:bg-gray-900",
+          "bg-gray-900 text-white data-[focus-visible]:bg-gray-950 data-[hovered]:bg-gray-950",
         secondary:
-          "bg-stone-200 text-gray-800 data-[focus-visible]:bg-stone-300 data-[hovered]:bg-stone-300",
+          "border-indigo-300 bg-indigo-200 text-gray-900 data-[focus-visible]:border-indigo-400 data-[hovered]:border-indigo-400 data-[focus-visible]:bg-indigo-300 data-[hovered]:bg-indigo-300",
         tertiary:
           "bg-gray-100 text-gray-800 data-[focus-visible]:bg-gray-200 data-[hovered]:bg-gray-200",
         outline:
